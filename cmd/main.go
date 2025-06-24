@@ -2,6 +2,7 @@ package main
 
 import (
 	"api/controller"
+	"api/usecase"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,7 +10,8 @@ import (
 func main() {
 	server := gin.Default()
 
-	ProductController := controller.NewProductController()
+	ProductUseCase := usecase.NewProductUseCase()
+	ProductController := controller.NewProductController(ProductUseCase)
 
 	server.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{

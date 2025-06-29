@@ -33,5 +33,5 @@ func main() {
 
 	server.POST("/product", ProductController.GetProducts)
 
-	server.Run(":8000")
+	server.Run(":8090")
 }

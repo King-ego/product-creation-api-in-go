@@ -1,0 +1,26 @@
+services:
+  postgres_go:
+    image: postgres:17
+    restart: always
+    environment:
+        POSTGRES_USER: ted
+        POSTGRES_PASSWORD: 1234
+        POSTGRES_DB: pd_users
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ted -d pd_users"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "15322:5432"
+      
+  api_go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres_go:
+        condition: service_healthy
+    ports:
+      - "8090:8090"
+  

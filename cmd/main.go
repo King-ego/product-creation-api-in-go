@@ -19,9 +19,13 @@ func main() {
 	}
 
 	ProductRepository := repository.NewProductRepository(dbConnect)
+	UserRepository := repository.NewUserRepository(dbConnect)
 
 	ProductUseCase := usecase.NewProductUseCase(ProductRepository)
+	UserUsecase := usecase.NewUserUseCase(UserRepository)
+
 	ProductController := controller.NewProductController(ProductUseCase)
+	UserController := controller.NewUserController(UserUsecase)
 
 	server.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
@@ -32,6 +36,8 @@ func main() {
 	server.GET("/products", ProductController.GetProducts)
 
 	server.POST("/product", ProductController.GetProducts)
+
+	server.GET("/users", UserController.GetUsers)
 
 	server.Run(":8090")
 }

@@ -1,7 +1,8 @@
 package main
 
 import (
-	"api/routes"
+	"api/db"
+	"api/router"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,13 +10,14 @@ import (
 func main() {
 	server := gin.Default()
 
-	ProductRoutes := routes.NewProductRouter(server)
+	dbConnect, error := db.ConnectDB()
 
-	ProductRoutes.Routers()
+	if error != nil {
+		panic(error)
+	}
 
-	UserRoutes := routes.NewUserRouter(server)
-
-	UserRoutes.Routers()
+	Router := router.NewRouters(server, dbConnect)
+	Router.Routers()
 
 	server.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{

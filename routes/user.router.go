@@ -2,31 +2,27 @@ package routes
 
 import (
 	"api/controller"
-	"api/db"
 	"api/repository"
 	"api/usecase"
+	"database/sql"
 
 	"github.com/gin-gonic/gin"
 )
 
 type UserRouter struct {
 	router *gin.Engine
+	db     *sql.DB
 }
 
-func NewUserRouter(router *gin.Engine) UserRouter {
+func NewUserRouter(router *gin.Engine, db *sql.DB) UserRouter {
 	return UserRouter{
 		router: router,
 	}
 }
 
 func (ru *UserRouter) Routers() {
-	dbConnect, error := db.ConnectDB()
 
-	if error != nil {
-		panic(error)
-	}
-
-	UserRepository := repository.NewUserRepository(dbConnect)
+	UserRepository := repository.NewUserRepository(ru.db)
 
 	UserUseCase := usecase.NewUserUseCase(UserRepository)
 

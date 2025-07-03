@@ -16,8 +16,8 @@ func main() {
 		panic(error)
 	}
 
-	Router := router.NewRouters(server, dbConnect)
-	Router.Routers()
+	r := router.NewRouters(server, dbConnect)
+	r.Routers()
 
 	server.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{

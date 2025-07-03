@@ -30,5 +30,5 @@ func (ru *ProductRouter) Routers() {
 	ProductController := controller.NewProductController(ProductUseCase)
 
 	ru.router.GET("/products", ProductController.GetProducts)
-	ru.router.POST("/product", ProductController.GetProducts)
+	ru.router.POST("/products", ProductController.CreateProduct)
 }

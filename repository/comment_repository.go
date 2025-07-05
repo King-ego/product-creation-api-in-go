@@ -47,5 +47,7 @@ func (pr *CommentRepository) GetComments() ([]model.Comment, error) {
 
 	rows.Close()
 
+	fmt.Println(CommentList)
+
 	return CommentList, err
 }

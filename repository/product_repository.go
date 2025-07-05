@@ -45,6 +45,8 @@ func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 
 	rows.Close()
 
+	fmt.Println(productList)
+
 	return productList, nil
 }
 

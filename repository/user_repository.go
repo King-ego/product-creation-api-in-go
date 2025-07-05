@@ -46,5 +46,7 @@ func (pr *UserRepository) GetUsers() ([]model.User, error) {
 
 	rows.Close()
 
+	fmt.Println(UserList)
+
 	return UserList, err
 }

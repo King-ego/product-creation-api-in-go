@@ -4,6 +4,7 @@ import (
 	"api/model"
 	"api/usecase"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -47,4 +48,24 @@ func (p *ProductController) CreateProduct(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, insertProduct)
 
+}
+
+func (p *ProductController) GetProduct(ctx *gin.Context) {
+	idstring := ctx.Param("id")
+
+	id, err := strconv.Atoi(idstring)
+
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+		return
+	}
+
+	product, err := p.ProductUseCase.GetProduct(id)
+
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, err)
+		return
+	}
+
+	ctx.JSON(http.StatusFound, product)
 }

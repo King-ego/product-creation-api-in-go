@@ -31,4 +31,5 @@ func (ru *ProductRouter) Routers() {
 
 	ru.router.GET("/products", ProductController.GetProducts)
 	ru.router.POST("/products", ProductController.CreateProduct)
+	ru.router.GET("/products/:id", ProductController.GetProduct)
 }

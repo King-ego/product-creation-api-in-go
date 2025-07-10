@@ -53,17 +53,36 @@ func (p *ProductController) CreateProduct(ctx *gin.Context) {
 func (p *ProductController) GetProduct(ctx *gin.Context) {
 	idstring := ctx.Param("id")
 
+	if idstring == "" {
+		response := model.Response{
+			Message: "id nãp pode ser nulo",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+
 	id, err := strconv.Atoi(idstring)
 
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err)
+		response := model.Response{
+			Message: "id precisa ser um número",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	product, err := p.ProductUseCase.GetProduct(id)
 
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, err)
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	if product == nil {
+		response := model.Response{
+			Message: "Produto não encontrado",
+		}
+		ctx.JSON(http.StatusNotFound, response)
 		return
 	}
 

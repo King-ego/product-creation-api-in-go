@@ -9,4 +9,6 @@ COPY . .
 
 EXPOSE 8090
 
-CMD ["go", "run", "./cmd/main.go"]
+RUN go build -o main cmd/main.go
+
+CMD ["./main"]

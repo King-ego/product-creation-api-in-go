@@ -6,6 +6,8 @@ import (
 	"api/usecase"
 	"database/sql"
 
+	"api/middlewares"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +31,7 @@ func (ru *ProductRouter) Routers() {
 
 	ProductController := controller.NewProductController(ProductUseCase)
 
-	ru.router.GET("/products", ProductController.GetProducts)
+	ru.router.GET("/products", middlewares.MidJwt, ProductController.GetProducts)
 	ru.router.POST("/products", ProductController.CreateProduct)
 	ru.router.GET("/products/:id", ProductController.GetProduct)
 }
